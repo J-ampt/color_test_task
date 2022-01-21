@@ -27,10 +27,25 @@ function Home(){
   const selectColor = (index) => {
     setcolors([
       ...colorstate.slice(0, index), 
-      {color: colorstate[index].color, selected: true}, 
+      {color: colorstate[index].color, selected: !colorstate[index].selected}, 
       ...colorstate.slice(index+1, 6)
     ]);
   };
+
+  function submit(){
+    const blue_color = colorstate.filter((current) => current.color==='#3B00F8').length;
+    const selected_blue_color = colorstate.filter((current) => current.color==='#3B00F8' && current.selected).length;
+    const miss_clicked = colorstate.filter((current) => current.color!=='#3B00F8' && current.selected).length;
+    if(miss_clicked) {
+      alert('You have selected wrong color')
+    }
+    else if(blue_color === selected_blue_color){
+      alert("You have selected all blue squres")
+    }
+    else{
+      alert("You have missed a few")
+    }
+    }
 
   return(
     <div className="container">
@@ -48,6 +63,9 @@ function Home(){
           )
         )}
       </div>
+      <button className="btn btn-primary mt-2"
+        onClick={submit}
+      >Submit</button>
     </div>
   )
 }
